@@ -4,10 +4,9 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\User;
-use Illuminate\Support\Facades\Hash;
+use App\Course;
 
-class UserController extends Controller
+class CourseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::latest()->paginate(10);
+        return Course::latest()->paginate(10);
     }
 
     /**
@@ -28,17 +27,13 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[            
-            'email'=>'required|string|email|max:191|unique:users',
-            'name'=>'required|string|max:191',
-            'password'=>'required|string|min:6'
+            'title'=>'required|string|max:191',
+            'credits'=>'required|integer|max:191'
         ]);
 
-        return User::create([
-            'name'=>$request['name'],
-            'email'=>$request['email'],
-            'type'=>$request['type'],
-            'password' =>Hash::make($request['password']),
-            'photo'=>$request['photo']
+        return Course::create([
+            'title'=>$request['title'],
+            'credits'=>$request['credits']
         ]);
     }
 
@@ -50,7 +45,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return User::findOrFail($id);
+        //
     }
 
     /**
@@ -62,15 +57,14 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
+        $course = Course::findOrFail($id);
 
         $this->validate($request,[            
-            'email'=>'required|string|email|max:191|unique:users,email,'.$user->id,
-            'name'=>'required|string|max:191',
-            'password'=>'sometimes|string|min:6'
+            'title'=>'required|string|max:191',
+            'credits'=>'required|integer|max:191'
         ]);
 
-        $user->update($request->all());
+        $course->update($request->all());
         return ['message'=>'Updated'];
     }
 
@@ -82,8 +76,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
+        $course = Course::findOrFail($id);
+        $course->delete();
         return ['message'=>'Deleted'];
     }
 }

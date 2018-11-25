@@ -18,3 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::apiResources(['user'=>'API\UserController']);
+Route::apiResources(['course'=>'API\CourseController']);
+Route::apiResources(['enrollment'=>'API\EnrollmentController']);

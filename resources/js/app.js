@@ -36,7 +36,9 @@ Vue.use(VueRouter)
 let routes = [
     { path: '/dashboard', component: require('./components/Dashboard.vue') },
     { path: '/profile', component: require('./components/Profile.vue') },
-    { path: '/user', component: require('./components/User.vue') }
+    { path: '/user', component: require('./components/User.vue') },
+    { path: '/course', component: require('./components/Course.vue') },
+    { path: '/enrollment', component: require('./components/Enrollment.vue') }
   ]
 
 const router = new VueRouter({

@@ -24,6 +24,20 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+        Schema::create('courses', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('title');
+            $table->integer('credits')->default('3');
+            $table->timestamps();
+        });
+        Schema::create('enrollments', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('userid')->unsigned();
+            $table->foreign('userid')->references('id')->on('users');
+            $table->integer('courseid')->unsigned();
+            $table->foreign('courseid')->references('id')->on('courses');
+            $table->timestamps();
+        });
     }
 
     /**

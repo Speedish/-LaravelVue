@@ -10,7 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>AdminLTE 3 | Starter</title>
+  <title>Student Enrollment</title>
   <link rel="stylesheet" href="/css/app.css">
 </head>
 <body class="hold-transition sidebar-mini">
@@ -47,7 +47,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <a href="index3.html" class="brand-link">
       <img src="./img/logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light">Test App</span>
+      <span class="brand-text font-weight-light">Student Enrollment</span>
     </a>
 
     <!-- Sidebar -->
@@ -91,13 +91,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </router-link>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="fa fa-circle-o nav-icon"></i>
-                  <p>Inactive Page</p>
-                </a>
+                <router-link to="/course" class="nav-link">
+                  <i class="fab fa-leanpub nav-icon"></i>
+                  <p>Course</p>
+                </router-link>
               </li>
             </ul>
           </li>
+          <li class="nav-item">
+                <router-link to="/enrollment" class="nav-link">
+                  <i class="fas fa-sign-in-alt nav-icon"></i>
+                  <p>Enrollment</p>
+                </router-link>
+              </li>
           <li class="nav-item">
             <router-link to="/profile" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
@@ -107,11 +113,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </router-link>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-power-off"></i>
-              <p>
-                Logout
-              </p>
+            <a href="#" class="nav-link"  href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        <i class="nav-icon fas fa-power-off"></i>
+
+                                        {{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
             </a>
           </li>
         </ul>
