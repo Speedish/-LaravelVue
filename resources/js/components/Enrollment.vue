@@ -21,9 +21,9 @@
                   </tr>
                   <tr v-for="enrollment in enrollments" :key="enrollment.id">
                     <td>{{enrollment.id}}</td>
-                    <td>{{enrollment.userid }}</td>
+                    <td>{{enrollment.user.name }}</td>
                     
-                    <td>{{enrollment.courseid}}</td>
+                    <td>{{enrollment.course.title}}</td>
                     <td>
                         <!-- <a href="#" @click="editModal(enrollments)">
                             <i class="fa fa-edit blue"></i>
@@ -55,16 +55,16 @@
             <form @submit.prevent="editMode ? updateEnrollment() : CreateEnrollment()">
             <div class="modal-body">
                 <div class="form-group">
-                    <select name="user" v-model="form.userid" id="user" placeholder="User Name" class="form-control" :class="{ 'is-invalid': form.errors.has('user') }">
+                    <select name="user" v-model="form.user_id" id="user" placeholder="User Name" class="form-control" :class="{ 'is-invalid': form.errors.has('user') }">
                          <option v-for="item in users" :value="item.id" :key="item.id">{{item.name}}</option>
                     </select>
                     <has-error :form="form" field="userid"></has-error>
                 </div>
                 <div class="form-group">
-                    <select name="course" v-model="form.courseid" id="course" class="form-control" :class="{ 'is-invalid': form.errors.has('course') }">
+                    <select name="course" v-model="form.course_id" id="course" class="form-control" :class="{ 'is-invalid': form.errors.has('course') }">
                         <option v-for="item in courses" :value="item.id" :key="item.id">{{item.title}}</option>
                     </select>
-                    <has-error :form="form" field="courseid"></has-error>
+                    <has-error :form="form" field="course_id"></has-error>
                 </div>                
             </div>
             <div class="modal-footer">
@@ -90,8 +90,8 @@
                 courses: {},
                 form: new Form({
                 id:'',
-                user: '',
-                course:''                
+                users: '',
+                courses:''                
                 })
             }
         },

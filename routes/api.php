@@ -20,3 +20,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::apiResources(['user'=>'API\UserController']);
 Route::apiResources(['course'=>'API\CourseController']);
 Route::apiResources(['enrollment'=>'API\EnrollmentController']);
+Route::apiResources(['dashboard'=>'API\DashboardController']);
+Route::get('profile', 'API\UserController@profile');
+
+Route::post('login', 'API\UserController@login');
+
+
+Route::group(['middleware' => 'auth:api'], function(){
+    Route::post('details', 'API\UserController@details');
+    });

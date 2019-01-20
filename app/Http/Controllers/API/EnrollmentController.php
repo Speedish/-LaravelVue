@@ -5,6 +5,11 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Enrollment;
+use App\User;
+use App\Course;
+use \Illuminate\Pagination\Paginator;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class EnrollmentController extends Controller
 {
@@ -15,9 +20,23 @@ class EnrollmentController extends Controller
      */
     public function index()
     {
-        return Enrollment::latest()->paginate(10);
-    }
+       // $categories = Category::get();
+    //return CategoryResource::collection($categories);
+        //return Enrollment::latest()->paginate(10);
+        $categories = collect();
+        foreach ( Enrollment::with('user', 'course')->get() as $key=> $category) {
+            $categories->push($category);
+        }
 
+        return $this->paginates($categories, $perPage = 15, $page = null, $options = []);
+        //$categories->paginate(10);
+    }
+    public function paginates($items, $perPage = 15, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -27,13 +46,13 @@ class EnrollmentController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[            
-            'userid'=>'required',
-            'courseid'=>'required'
+            'user_id'=>'required',
+            'course_id'=>'required'
         ]);
 
         return Enrollment::create([
-            'userid'=>$request['userid'],
-            'courseid'=>$request['courseid']
+            'user_id'=>$request['user_id'],
+            'course_id'=>$request['course_id']
         ]);
     }
 
@@ -60,8 +79,8 @@ class EnrollmentController extends Controller
         $enrollment = Enrollment::findOrFail($id);
 
         $this->validate($request,[            
-            'userid'=>'required',
-            'courseid'=>'required'
+            'user_id'=>'required',
+            'course_id'=>'required'
         ]);
 
         $enrollment->update($request->all());

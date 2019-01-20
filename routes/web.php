@@ -20,3 +20,8 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('{path}', 'HomeController@index')->where('path','([A-z\d-\/_.]+)?');
+
+Route::get('api/dashboard', 'DashboardController@index');
+
+//Route::get('api/profile', 'UserController@profile');
+//Route::get('profile', 'API\PlanController@PlanActivity')->name('profile');

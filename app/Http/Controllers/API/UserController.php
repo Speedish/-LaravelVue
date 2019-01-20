@@ -9,6 +9,16 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:api');
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -52,7 +62,15 @@ class UserController extends Controller
     {
         return User::findOrFail($id);
     }
-
+    public function profile()
+    {
+        return auth('api')->user();
+    }
+    public function details() 
+    { 
+        $user = Auth::user(); 
+        return response()->json(['success' => $user], $this-> successStatus); 
+    } 
     /**
      * Update the specified resource in storage.
      *

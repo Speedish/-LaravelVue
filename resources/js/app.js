@@ -9,7 +9,7 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 import moment from 'moment';
-
+import VueSession from 'vue-session'
 import { Form, HasError, AlertError } from 'vform'
 
 import swal from 'sweetalert2'
@@ -30,12 +30,18 @@ Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
 
 import VueRouter from 'vue-router'
+Vue.use(VueSession)
 
 Vue.use(VueRouter)
 
 let routes = [
     { path: '/dashboard', component: require('./components/Dashboard.vue') },
-    { path: '/profile', component: require('./components/Profile.vue') },
+    {
+      path: '/profile',
+      name: 'Profile',
+      component: require('./components/Profile.vue'),
+      props: true
+    },
     { path: '/user', component: require('./components/User.vue') },
     { path: '/course', component: require('./components/Course.vue') },
     { path: '/enrollment', component: require('./components/Enrollment.vue') }
@@ -62,6 +68,21 @@ const router = new VueRouter({
  *
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
+
+Vue.component(
+  'passport-clients',
+  require('./components/passport/Clients.vue')
+);
+
+Vue.component(
+  'passport-authorized-clients',
+  require('./components/passport/AuthorizedClients.vue')
+);
+
+Vue.component(
+  'passport-personal-access-tokens',
+  require('./components/passport/PersonalAccessTokens.vue')
+);
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
